@@ -16,9 +16,9 @@ app.get("/", (req, res) => {
 app.get("/all", async (req, res) => {
   try {
     const students = await Student.find();
-    res.json(students);
+    res.json({ status: "ok", data: students });
   } catch (error) {
-    res.send("Internal Server Error");
+    res.json({ status: "error", error: "Internal Server Error" });
   }
 });
 //Saving new student details to the database
@@ -53,7 +53,7 @@ app.put("/update/:id", async (req, res) => {
       { $set: updatedInfo },
       { new: true }
     );
-    res.json(student);
+    res.json({ status: "ok", data: student });
   } catch (error) {
     res.json({ status: "Error", error: error.message });
   }
